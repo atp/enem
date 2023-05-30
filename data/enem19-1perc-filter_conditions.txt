@@ -1,0 +1,10 @@
+def filterdf(df):
+    df = df[df["TP_PRESENCA_CN"] == 1] #presente nas 4 provas
+    df = df[df["TP_PRESENCA_CH"] == 1]
+    df = df[df["TP_PRESENCA_LC"] == 1]
+    df = df[df["TP_PRESENCA_MT"] == 1]
+    df = df[df["IN_TREINEIRO"] == 0] # não é treineiro
+    df = df[df["TP_ST_CONCLUSAO"].isin([1,2])] #afirma que concluiu ou vai concluir EM em 2019
+    # não queremos as notas == 0
+    df = df.query("NU_NOTA_CH != 0 and NU_NOTA_CN != 0 and NU_NOTA_LC != 0 and NU_NOTA_MT != 0") 
+    return df

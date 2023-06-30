@@ -218,7 +218,7 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 15,LC,87976,E,3,0,,1.17170,0.89862,0.25164,Amarela,552,,0
 15,LC,89317,E,28,0,,3.23142,-0.18840,0.16189,Rosa,513,,0
 15,LC,118174,C,19,0,,3.99087,0.86875,0.18680,Azul,511,,0
-15,LC,118260,E,15,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Branca,514,,0
+15,LC,118260,E,15,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Branca,514,,0
 16,LC,23833,C,20,0,,3.34117,0.44968,0.20117,Amarela,512,,0
 16,LC,23833,C,20,0,,3.34117,0.44968,0.20117,Laranja,521,,0
 16,LC,23833,C,20,0,,3.34117,0.44968,0.20117,Verde,525,,1
@@ -370,9 +370,9 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 29,LC,96915,C,2,0,,1.32994,0.45604,0.21237,Amarela,552,,0
 29,LC,98305,B,25,0,,2.68414,1.64734,0.20502,Branca,553,,0
 29,LC,118174,C,19,0,,3.99087,0.86875,0.18680,Rosa,513,,0
-29,LC,118260,E,15,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Amarela,512,,0
-29,LC,118260,E,15,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Laranja,521,,0
-29,LC,118260,E,15,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Verde,525,,1
+29,LC,118260,E,15,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Amarela,512,,0
+29,LC,118260,E,15,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Laranja,521,,0
+29,LC,118260,E,15,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Verde,525,,1
 30,LC,23833,C,20,0,,3.34117,0.44968,0.20117,Azul,511,,0
 30,LC,76167,D,1,0,,1.82086,0.22830,0.00715,Rosa,513,,0
 30,LC,83874,E,24,0,,1.72598,1.04219,0.25255,Azul,551,,0
@@ -415,7 +415,7 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 33,LC,77601,E,21,0,,0.94826,0.35004,0.25475,Amarela,552,,0
 33,LC,87984,E,15,0,,1.57794,1.16158,0.24936,Branca,553,,0
 33,LC,118192,B,25,0,,3.36624,2.31528,0.19736,Rosa,513,,0
-33,LC,118260,E,15,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Azul,511,,0
+33,LC,118260,E,15,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Azul,511,,0
 33,LC,118276,C,16,0,,2.59876,0.75076,0.13733,Branca,514,,0
 34,LC,60118,C,25,0,,1.96907,0.67402,0.18127,Amarela,552,,0
 34,LC,81621,B,23,0,,1.90137,0.70873,0.20236,Rosa,554,,0
@@ -449,7 +449,7 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 36,LC,97756,A,17,0,,1.12246,0.52192,0.21723,Azul,551,,0
 36,LC,97756,A,17,0,,1.12246,0.52192,0.21723,Laranja,565,,0
 36,LC,118070,A,18,0,,1.51246,-0.12978,0.05576,Branca,553,,0
-36,LC,118260,E,15,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Rosa,513,,0
+36,LC,118260,E,15,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Rosa,513,,0
 37,LC,24785,D,28,0,,4.08970,-0.15593,0.18836,Azul,511,,0
 37,LC,63561,A,12,0,,4.43539,0.87957,0.17250,Amarela,552,,0
 37,LC,68155,E,23,0,,2.04517,1.17350,0.17667,Branca,553,,0
@@ -581,7 +581,7 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 48,CH,87749,A,11,0,,2.67268,-0.28183,0.19225,Branca,549,,0
 48,CH,89651,A,1,0,,2.13648,1.04296,0.21255,Rosa,550,,0
 48,CH,95831,C,30,0,,2.62983,1.05995,0.16211,Amarela,548,,0
-48,CH,118067,C,29,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Azul,507,,0
+48,CH,118067,C,29,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Azul,507,,0
 49,CH,52963,E,2,0,,3.32852,1.08766,0.16493,Azul,547,,0
 49,CH,52963,E,2,0,,3.32852,1.08766,0.16493,Laranja,564,,0
 49,CH,66498,C,30,0,,1.31749,0.44063,0.18259,Azul,507,,0
@@ -769,7 +769,7 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 65,CH,95413,C,11,0,,2.02759,0.56987,0.17850,Laranja,564,,0
 65,CH,97975,A,1,0,,1.45676,1.36180,0.21595,Azul,507,,0
 65,CH,118038,D,26,0,,3.49023,1.02573,0.18725,Branca,509,,0
-66,CH,76955,B,27,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Branca,509,,0
+66,CH,76955,B,27,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Branca,509,,0
 66,CH,81818,C,23,0,,2.38508,0.67408,0.18918,Rosa,550,,0
 66,CH,86991,C,15,0,,2.59981,1.53287,0.15792,Amarela,548,,0
 66,CH,89651,A,1,0,,2.13648,1.04296,0.21255,Branca,549,,0
@@ -812,7 +812,7 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 69,CH,118029,B,5,0,,2.63717,1.07054,0.22582,Amarela,508,,0
 69,CH,118029,B,5,0,,2.63717,1.07054,0.22582,Laranja,520,,0
 69,CH,118029,B,5,0,,2.63717,1.07054,0.22582,Verde,524,,1
-69,CH,118067,C,29,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Branca,509,,0
+69,CH,118067,C,29,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Branca,509,,0
 70,CH,41002,E,12,0,,1.98944,1.72511,0.24433,Branca,549,,0
 70,CH,50201,E,28,0,,3.63204,0.80166,0.15213,Rosa,550,,0
 70,CH,66498,C,30,0,,1.31749,0.44063,0.18259,Branca,509,,0
@@ -840,7 +840,7 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 72,CH,11601,D,15,0,,1.20499,0.97500,0.14600,Verde,524,,1
 72,CH,40836,D,16,0,,2.75240,0.48486,0.18766,Azul,547,,0
 72,CH,40836,D,16,0,,2.75240,0.48486,0.18766,Laranja,564,,0
-72,CH,76955,B,27,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Rosa,510,,0
+72,CH,76955,B,27,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Rosa,510,,0
 72,CH,85139,B,24,0,,2.89534,0.60872,0.22906,Azul,507,,0
 72,CH,87041,D,4,0,,1.37840,1.28906,0.18498,Rosa,550,,0
 72,CH,87217,E,13,0,,3.91544,1.06044,0.15819,Amarela,548,,0
@@ -878,7 +878,7 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 75,CH,96407,A,1,0,,1.78715,1.35975,0.17387,Rosa,550,,0
 75,CH,112135,A,27,0,,2.05925,0.34452,0.21848,Azul,507,,0
 75,CH,118033,C,6,0,,3.33353,0.65950,0.32563,Branca,509,,0
-75,CH,118067,C,29,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Rosa,510,,0
+75,CH,118067,C,29,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Rosa,510,,0
 76,CH,45145,E,18,0,,2.33550,-0.75250,0.18114,Azul,547,,0
 76,CH,45145,E,18,0,,2.33550,-0.75250,0.18114,Laranja,564,,0
 76,CH,45168,B,12,0,,2.56996,0.69017,0.24002,Branca,549,,0
@@ -902,9 +902,9 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 77,CH,118038,D,26,0,,3.49023,1.02573,0.18725,Laranja,520,,0
 77,CH,118038,D,26,0,,3.49023,1.02573,0.18725,Verde,524,,1
 78,CH,52963,E,2,0,,3.32852,1.08766,0.16493,Rosa,550,,0
-78,CH,76955,B,27,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Amarela,508,,0
-78,CH,76955,B,27,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Laranja,520,,0
-78,CH,76955,B,27,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Verde,524,,1
+78,CH,76955,B,27,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Amarela,508,,0
+78,CH,76955,B,27,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Laranja,520,,0
+78,CH,76955,B,27,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Verde,524,,1
 78,CH,85847,A,8,0,,1.69597,1.03540,0.23669,Amarela,548,,0
 78,CH,88233,A,15,0,,1.39689,1.31818,0.11442,Branca,509,,0
 78,CH,97931,A,23,0,,0.98907,1.33715,0.26413,Branca,549,,0
@@ -942,9 +942,9 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 81,CH,89147,B,18,0,,3.04427,1.36609,0.23176,Azul,507,,0
 81,CH,89651,A,1,0,,2.13648,1.04296,0.21255,Amarela,548,,0
 81,CH,118029,B,5,0,,2.63717,1.07054,0.22582,Rosa,510,,0
-81,CH,118067,C,29,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Amarela,508,,0
-81,CH,118067,C,29,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Laranja,520,,0
-81,CH,118067,C,29,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Verde,524,,1
+81,CH,118067,C,29,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Amarela,508,,0
+81,CH,118067,C,29,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Laranja,520,,0
+81,CH,118067,C,29,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Verde,524,,1
 82,CH,16894,B,15,0,,2.08568,0.34336,0.18516,Rosa,550,,0
 82,CH,45145,E,18,0,,2.33550,-0.75250,0.18114,Branca,549,,0
 82,CH,66498,C,30,0,,1.31749,0.44063,0.18259,Amarela,508,,0
@@ -1036,7 +1036,7 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 90,CH,45168,B,12,0,,2.56996,0.69017,0.24002,Azul,547,,0
 90,CH,45168,B,12,0,,2.56996,0.69017,0.24002,Laranja,564,,0
 90,CH,52963,E,2,0,,3.32852,1.08766,0.16493,Amarela,548,,0
-90,CH,76955,B,27,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Azul,507,,0
+90,CH,76955,B,27,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Azul,507,,0
 90,CH,83842,C,17,0,,2.34377,1.12196,0.19779,Branca,549,,0
 90,CH,88306,B,23,0,,1.78628,1.34891,0.18079,Rosa,510,,0
 90,CH,89147,B,18,0,,3.04427,1.36609,0.23176,Branca,509,,0
@@ -1120,12 +1120,12 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 98,CN,81478,B,8,0,,2.37739,1.59193,0.20921,Cinza,505,,0
 98,CN,81478,B,8,0,,2.37739,1.59193,0.20921,Laranja,519,,0
 98,CN,81478,B,8,0,,2.37739,1.59193,0.20921,Verde,523,,1
-98,CN,83609,E,18,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Amarela,504,,0
+98,CN,83609,E,18,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Amarela,504,,0
 98,CN,89150,E,22,0,,3.48200,0.29664,0.15617,Azul,503,,0
 98,CN,97473,E,24,0,,2.29041,1.62817,0.10799,Azul,545,,0
 98,CN,117836,A,23,0,,1.87838,1.45214,0.07496,Rosa,506,,0
 99,CN,29776,E,30,0,,2.80865,0.58402,0.21207,Rosa,506,,0
-99,CN,42605,B,6,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Rosa,546,,0
+99,CN,42605,B,6,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Rosa,546,,0
 99,CN,43415,D,17,0,,2.52214,0.21891,0.13215,Cinza,544,,0
 99,CN,60311,E,10,0,,2.79351,0.15609,0.14102,Amarela,504,,0
 99,CN,83526,C,16,0,,1.62997,1.70518,0.16280,Cinza,505,,0
@@ -1189,7 +1189,7 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 105,CN,19407,E,17,0,,2.32962,1.67314,0.14993,Laranja,519,,0
 105,CN,19407,E,17,0,,2.32962,1.67314,0.14993,Verde,523,,1
 105,CN,26172,D,29,0,,2.05099,1.55165,0.24664,Rosa,546,,0
-105,CN,42605,B,6,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Cinza,544,,0
+105,CN,42605,B,6,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Cinza,544,,0
 105,CN,82236,D,22,0,,2.77263,1.28601,0.13618,Azul,503,,0
 105,CN,87672,E,4,0,,3.65089,0.67311,0.11670,Azul,545,,0
 105,CN,97529,D,12,0,,3.38544,0.09025,0.06170,Amarela,543,,0
@@ -1206,9 +1206,9 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 106,CN,117979,B,6,0,,1.19339,2.04675,0.26041,Verde,523,,1
 107,CN,19223,B,14,0,,2.06769,-0.11974,0.19742,Azul,503,,0
 107,CN,32764,C,23,0,,1.81744,0.89315,0.18404,Rosa,546,,0
-107,CN,83609,E,18,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Cinza,505,,0
-107,CN,83609,E,18,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Laranja,519,,0
-107,CN,83609,E,18,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Verde,523,,1
+107,CN,83609,E,18,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Cinza,505,,0
+107,CN,83609,E,18,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Laranja,519,,0
+107,CN,83609,E,18,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Verde,523,,1
 107,CN,95247,A,3,0,,2.50112,1.05664,0.32387,Azul,545,,0
 107,CN,97169,A,20,0,,5.93339,1.98881,0.13188,Amarela,504,,0
 107,CN,97322,B,20,0,,2.41465,1.28437,0.21462,Amarela,543,,0
@@ -1338,7 +1338,7 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 120,CN,19223,B,14,0,,2.06769,-0.11974,0.19742,Cinza,505,,0
 120,CN,19223,B,14,0,,2.06769,-0.11974,0.19742,Laranja,519,,0
 120,CN,19223,B,14,0,,2.06769,-0.11974,0.19742,Verde,523,,1
-120,CN,42605,B,6,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Amarela,543,,0
+120,CN,42605,B,6,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Amarela,543,,0
 120,CN,54381,A,18,0,,3.20714,2.14905,0.08067,Azul,503,,0
 120,CN,61016,C,18,0,,2.67126,1.51594,0.34541,Cinza,544,,0
 120,CN,84577,E,19,0,,1.97961,0.58964,0.11543,Azul,545,,0
@@ -1360,7 +1360,7 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 122,CN,41113,A,28,0,,1.01744,1.32948,0.27018,Azul,545,,0
 122,CN,82236,D,22,0,,2.77263,1.28601,0.13618,Rosa,506,,0
 122,CN,83267,A,7,0,,2.48802,1.11356,0.25883,Rosa,546,,0
-122,CN,83609,E,18,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Azul,503,,0
+122,CN,83609,E,18,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Azul,503,,0
 122,CN,97805,B,25,0,,2.71636,1.43258,0.18478,Amarela,543,,0
 122,CN,97891,B,20,0,,2.82930,0.10631,0.18276,Cinza,544,,0
 122,CN,117883,B,7,0,,0.38139,3.36471,0.06869,Amarela,504,,0
@@ -1428,8 +1428,8 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 129,CN,31718,D,28,0,,1.90483,0.48421,0.21286,Cinza,505,,0
 129,CN,31718,D,28,0,,1.90483,0.48421,0.21286,Laranja,519,,0
 129,CN,31718,D,28,0,,1.90483,0.48421,0.21286,Verde,523,,1
-129,CN,42605,B,6,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Azul,545,,0
-129,CN,83609,E,18,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Rosa,506,,0
+129,CN,42605,B,6,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Azul,545,,0
+129,CN,83609,E,18,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Rosa,506,,0
 129,CN,88674,B,9,0,,2.66337,1.06727,0.09434,Cinza,544,,0
 129,CN,89772,C,7,0,,0.67587,1.59601,0.02169,Azul,503,,0
 129,CN,96239,B,15,0,,2.07124,1.58513,0.15155,Rosa,546,,0
@@ -1545,9 +1545,9 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 140,MT,86432,A,1,0,,1.12267,0.37213,0.26876,Laranja,522,,0
 140,MT,86432,A,1,0,,1.12267,0.37213,0.26876,Verde,526,,1
 141,MT,7252,B,8,0,,2.58500,1.16500,0.31500,Rosa,558,,0
-141,MT,23065,C,14,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Cinza,518,,0
-141,MT,23065,C,14,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Laranja,522,,0
-141,MT,23065,C,14,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Verde,526,,1
+141,MT,23065,C,14,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Cinza,518,,0
+141,MT,23065,C,14,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Laranja,522,,0
+141,MT,23065,C,14,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Verde,526,,1
 141,MT,48515,B,14,0,,2.46277,0.96714,0.14018,Cinza,556,,0
 141,MT,96736,C,17,0,,2.28426,1.83963,0.28279,Amarela,555,,0
 141,MT,97573,E,10,0,,1.82771,1.84056,0.10251,Azul,557,,0
@@ -1577,14 +1577,14 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 144,MT,9633,B,16,0,,2.86801,1.99700,0.20400,Rosa,558,,0
 144,MT,11633,E,28,0,,3.43293,0.64943,0.08186,Cinza,556,,0
 144,MT,17472,D,21,0,,2.19254,2.98935,0.08592,Azul,557,,0
-144,MT,28698,C,3,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Amarela,555,,0
+144,MT,28698,C,3,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Amarela,555,,0
 144,MT,30436,C,12,0,,1.64692,0.47926,0.18811,Cinza,518,,0
 144,MT,30436,C,12,0,,1.64692,0.47926,0.18811,Laranja,522,,0
 144,MT,30436,C,12,0,,1.64692,0.47926,0.18811,Verde,526,,1
 144,MT,63187,D,1,0,,1.86876,0.42930,0.12552,Amarela,516,,0
 144,MT,86432,A,1,0,,1.12267,0.37213,0.26876,Azul,515,,0
 144,MT,111608,E,5,0,,2.47366,1.61606,0.04665,Rosa,517,,0
-145,MT,23065,C,14,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Azul,515,,0
+145,MT,23065,C,14,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Azul,515,,0
 145,MT,31006,D,13,0,,1.43190,3.33150,0.13506,Cinza,556,,0
 145,MT,48676,A,19,0,,2.90123,1.98964,0.13444,Amarela,555,,0
 145,MT,59845,D,1,0,,2.19220,1.42767,0.18183,Azul,557,,0
@@ -1626,7 +1626,7 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 148,MT,117607,B,16,0,,2.28084,1.24447,0.12125,Verde,526,,1
 149,MT,6944,D,12,0,,1.59700,2.86500,0.18700,Cinza,556,,0
 149,MT,9066,B,28,0,,3.05699,2.46500,0.05800,Rosa,558,,0
-149,MT,23065,C,14,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Amarela,516,,0
+149,MT,23065,C,14,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Amarela,516,,0
 149,MT,30066,B,29,0,,1.00745,3.60668,0.13211,Azul,557,,0
 149,MT,30570,E,3,0,,3.17618,2.35696,0.27294,Cinza,518,,0
 149,MT,30570,E,3,0,,3.17618,2.35696,0.27294,Laranja,522,,0
@@ -1667,7 +1667,7 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 153,MT,15171,D,25,0,,1.98101,1.69800,0.08800,Cinza,556,,0
 153,MT,15190,D,12,0,,2.54069,1.80662,0.16323,Azul,557,,0
 153,MT,17472,D,21,0,,2.19254,2.98935,0.08592,Amarela,555,,0
-153,MT,23065,C,14,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Rosa,517,,0
+153,MT,23065,C,14,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Rosa,517,,0
 153,MT,30570,E,3,0,,3.17618,2.35696,0.27294,Azul,515,,0
 153,MT,32551,E,4,0,,2.53686,1.95015,0.11345,Rosa,558,,0
 153,MT,111608,E,5,0,,2.47366,1.61606,0.04665,Cinza,518,,0
@@ -1737,7 +1737,7 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 160,MT,7252,B,8,0,,2.58500,1.16500,0.31500,Amarela,555,,0
 160,MT,8368,C,28,0,,2.17954,1.95289,0.13818,Azul,515,,0
 160,MT,10339,B,19,0,,2.06000,2.36300,0.19500,Azul,557,,0
-160,MT,28698,C,3,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Rosa,558,,0
+160,MT,28698,C,3,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Rosa,558,,0
 160,MT,39708,C,3,0,,2.45518,2.61221,0.15911,Amarela,516,,0
 160,MT,40824,B,22,0,,2.03717,3.05832,0.19593,Cinza,556,,0
 160,MT,117607,B,16,0,,2.28084,1.24447,0.12125,Rosa,517,,0
@@ -1797,7 +1797,7 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 166,MT,10360,D,8,0,,1.52296,2.72201,0.36496,Azul,515,,0
 166,MT,13303,B,27,0,,3.10730,1.87878,0.18717,Amarela,516,,0
 166,MT,15190,D,12,0,,2.54069,1.80662,0.16323,Rosa,558,,0
-166,MT,28698,C,3,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Azul,557,,0
+166,MT,28698,C,3,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Azul,557,,0
 166,MT,66692,A,4,0,,2.85166,1.96349,0.07237,Cinza,556,,0
 166,MT,81332,E,9,0,,2.66849,2.34035,0.08110,Amarela,555,,0
 166,MT,83792,E,2,0,,1.25552,1.93449,0.06675,Cinza,518,,0
@@ -1876,7 +1876,7 @@ CO_POSICAO,SG_AREA,CO_ITEM,TX_GABARITO,CO_HABILIDADE,IN_ITEM_ABAN,TX_MOTIVO_ABAN
 173,MT,89634,E,28,0,,2.59370,1.91179,0.07742,Azul,515,,0
 174,MT,17472,D,21,0,,2.19254,2.98935,0.08592,Rosa,558,,0
 174,MT,18002,C,4,0,,3.41848,1.95818,0.16938,Rosa,517,,0
-174,MT,28698,C,3,1,Não permitiu a convergência do algoritmo de estimação da TRI,,,,Cinza,556,,0
+174,MT,28698,C,3,1,NÃ£o permitiu a convergÃªncia do algoritmo de estimaÃ§Ã£o da TRI,,,,Cinza,556,,0
 174,MT,31006,D,13,0,,1.43190,3.33150,0.13506,Amarela,555,,0
 174,MT,39708,C,3,0,,2.45518,2.61221,0.15911,Cinza,518,,0
 174,MT,39708,C,3,0,,2.45518,2.61221,0.15911,Laranja,522,,0

@@ -1,3 +1,8 @@
+# arquivos ignorados pelo git do projeto atp_enem
+/data
+
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

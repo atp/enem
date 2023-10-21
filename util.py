@@ -63,6 +63,7 @@ def item_info_inep(ano=None,area=None,cor=None,prova=None,item=None,list_criteri
     if prova:
         return itens.query('CO_PROVA == @prova')
     if item:
+        item = str(item)
         return itens.query('CO_ITEM == @item')
 
     
@@ -78,10 +79,53 @@ def item_info_inep(ano=None,area=None,cor=None,prova=None,item=None,list_criteri
 
     return itens
 
+
+def objurl(ano,pos,gab):
+    primdia = segdia = False
+    if ano >=2017:
+        if pos > 90:
+            segdia = True
+        if ano >= 2018:
+           if pos <= 90:
+               primdia = True
+    pos = str(pos).zfill(3)
+    gab = gab.lower()
+    if ano in [2017]:
+        gab = gab.upper()
+    if ano == 2009:
+        return f'https://www.curso-objetivo.br/vestibular/resolucao_comentada/enem/{ano}/{pos}.gif'
+    if ano == 2020:
+        if primdia:
+            url = f'https://www.curso-objetivo.br/vestibular/resolucao_comentada/enem/{ano}/presencial/1dia/{pos}{gab}.gif'
+        elif segdia:
+            url = f'https://www.curso-objetivo.br/vestibular/resolucao_comentada/enem/{ano}/presencial/2dia/{pos}{gab}.gif'
+    else:
+        if primdia:
+            url = f'https://www.curso-objetivo.br/vestibular/resolucao_comentada/enem/{ano}/1dia/{pos}{gab}.gif'
+        elif segdia:
+            url = f'https://www.curso-objetivo.br/vestibular/resolucao_comentada/enem/{ano}/2dia/{pos}{gab}.gif'
+        else:
+            url = f'https://www.curso-objetivo.br/vestibular/resolucao_comentada/enem/{ano}/{pos}{gab}.gif'
+        
+    return url
+
+def item_url(item):
+    try:
+        ano,pos,gab = item_info_inep(item=item).query("TX_COR == 'AMARELA'")[['ano','CO_POSICAO','TX_GABARITO']].iloc[0]
+    except IndexError:
+        return f'{item} not found'
+    if ano == 2016:
+        pos = pos - 45
+    if ano == 2017:
+        ano,pos,gab = item_info_inep(item=item).query("TX_COR == 'AZUL'")[['ano','CO_POSICAO','TX_GABARITO']].iloc[0]
+        pos = pos + 90
+    return objurl(ano,pos,gab)
+
 def rename_aban(itemname):
     return itemname.strip('-aban')
 
-def item_stats(ano,area):
+
+def item_stats(ano,area,cor='AMARELA'):
     acertos  = load_acertos(ano, area, n=10000,remove_abandonados=False)
     resp = acertos.iloc[:,:-3]
     resp.rename(columns=rename_aban,inplace=True)
@@ -90,9 +134,13 @@ def item_stats(ano,area):
     #istats.index = istats.index.astype(int)
     #istats.index = istats.index
     item_info = item_info_inep(ano,area)
-    item_info = item_info.drop_duplicates(subset=['CO_ITEM'],keep='first')
+    if cor:
+        item_info = item_info.query("TX_COR == @cor")
+    else:
+        item_info = item_info.drop_duplicates(subset=['CO_ITEM'],keep='first')
+    item_info.insert(0,'url',item_info['CO_ITEM'].apply(item_url))
     item_info = item_info.set_index('CO_ITEM')
     #item_info.index = item_info.index.astype(str)
     istats = pd.merge(istats,item_info,how='left',left_index=True,right_index=True,validate='1:m')
-    istats = istats.drop(columns=['CO_HABILIDADE','CO_POSICAO','TX_COR','CO_PROVA'])
+    istats = istats.drop(columns=['total.r_if_rm','alpha_if_rm'])
     return istats

@@ -33,12 +33,15 @@ def load_sample(ano,n):
     df = pd.read_csv(fn)
     return df.sample(n)
 
-def load_acertos(ano,area,n,remove_abandonados=True):
+def load_acertos(ano,area,n,remove_abandonados=True,prova=None):
     assert ano in range(2009,2023)
     assert area in ['CN','CH','MT']
     perc = 1 #TODO: generalizar para quando temos outras porcentagens
     fn = f'data/ac_{perc}_{ano}_{area}.csv'
     resp = pd.read_csv(fn,index_col='candidato')
+    if prova:
+        assert prova in resp['caderno'].unique()
+        resp = resp.query('caderno == @prova')
     if remove_abandonados:
         removed_columns = [col for col in resp.columns if col.endswith('-aban')]
         resp = resp.drop(columns=removed_columns)
@@ -144,3 +147,54 @@ def item_stats(ano,area,cor='AMARELA'):
     istats = pd.merge(istats,item_info,how='left',left_index=True,right_index=True,validate='1:m')
     istats = istats.drop(columns=['total.r_if_rm','alpha_if_rm'])
     return istats
+
+def provas(ano,area):
+    'retorna as provas (cadernos) em nossas amostras de um determinado ano / area'
+    
+    amostra = load_acertos(ano,area,10000)
+    return amostra['caderno'].unique()
+
+def params_inep(prova):
+    params = item_info_inep(prova=prova)
+    params = params[["CO_ITEM","NU_PARAM_A","NU_PARAM_B","NU_PARAM_C"]]
+    params['CO_ITEM'] = params['CO_ITEM'].astype(int)
+    params = params.set_index("CO_ITEM")
+    params.columns = ["a_inep","b_inep","c_inep"]
+    params['u'] = 1
+    return params.dropna().sort_index()
+
+def load_padr(prova,n=1,nota_inep=False):
+    'Carrega um padrão de resposta aleatório. Retorna padrões de resposta'
+    perc = 1 #TODO: generalizar para quando temos outras porcentagens
+    ano = item_info_inep(prova=prova)['ano'].iloc[0]
+    area = item_info_inep(prova=prova)['SG_AREA'].iloc[0]
+    fn = f'data/ac_{perc}_{ano}_{area}.csv'
+    resp = pd.read_csv(fn,index_col='candidato')
+    assert prova in resp['caderno'].unique()
+    resp = resp.query('caderno == @prova')
+    resp = resp.sample(n)
+    removed_columns = [col for col in resp.columns if col.endswith('-aban')]
+    # em 2011 o inep não deu os parámetros do item 73678 (mas não indicou que era abandonado)
+    resp = resp.drop(columns=removed_columns)
+    resp1 = resp.iloc[:,:-3]
+    if nota_inep:
+        notas = resp.iloc[:,-3:]
+    resp1.columns = resp1.columns.astype(int)
+    resp1 = resp1.sort_index(axis=1) # se não fizer isso, os itens (colunas nestas padrões de resposta) não correspondem ao modelo mod_inep acima
+    if nota_inep:
+        return resp1,notas
+        
+    return resp1
+
+def score_inep(padr,prova = None,params = None, method="EAP"):
+    if prova is None:
+        assert params is not None
+    if params is None:
+        params = params_inep(prova)
+    # transformar os parâmetros de discriminação /  dificuldade de IRT para "slope / intercept" do mirt.
+    params = mirt.traditional2mirt(to_rdf(params),"3PL")
+    mod_inep = mirtcat.generate_mirt_object(to_rdf(params),itemtype = '3PL')
+    score = mirt.fscores(mod_inep,method=method,full_scores=True,returnER=False,verbose=True ,response_pattern = to_rdf(padr))
+    nota = to_df(score)[:,0]
+    se = to_df(score)[:,1]
+    return pd.DataFrame({'nota':nota, 'se':se},index=padr.index)

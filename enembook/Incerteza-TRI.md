@@ -1,0 +1,4 @@
+# Incerteza da nota ENEM dado pela análise TRI
+Qualquer instrumento tem uma resolução e uma incerteza intrínsica associado a ele. O fato que uma prova não consiste de um número infinito de questões implica necessariamente em limites para a precisão do instrumento. Na teorica clássica de testes, onde a nota é simplesmente a soma dos acertos, esta incerteza é quantificado pela coeficiente de confiabiliade. Conceitualmente, este confiabilidade poderia ser estimada via a correlação entre "formas alternativas" do teste, por exemplo imaginando que re-aplicamos o teste a um candidato (após uma lavagem cerebral, para que a segunda aplicação é independente da primeira). Se a correlação entre re-aplciações é perfeita, o confiabilidade do teste é 1 (perfeita) e sua incerteza é zero. 
+
+Uma característica interessante do TRI é que a estimativa da incerteza depende do nível de proficiência. 

@@ -1,0 +1,2 @@
+# Características das questões
+

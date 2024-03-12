@@ -1,0 +1,20 @@
+format: jb-book
+root: index
+parts:
+  - caption: Testes padronizadas X
+    chapters:
+    - file: Teoria de testes
+      title: Teorica Clássica e TRI
+    - file: TRI
+  - caption: O ENEM 2009-2022
+    numbered: True
+    chapters:
+    - file: Desempenho
+    - file: Características das questões
+    - file: Análise dos Itens do ENEM.ipynb
+      title: Análise dos Itens do ENEM 2009-2022
+  - caption: Incerteza
+    chapters:
+    - file: Incerteza-TRI
+    - file: Contrafactuais
+    - file: Consequências 

@@ -1,4 +1,4 @@
-# RELATÓRIO PARCIAL DE ATIVIDADES DO ALUNO DE INICIAÇÃO CIENTÍFICA (IC / PUB / IFUSP)
+# Relatório 1 - Gabriel
 
 ## IDENTIFICAÇÃO
 > Edital PUB 2023 – Código do projeto: 1950

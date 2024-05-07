@@ -1,6 +1,8 @@
 # Apresentação 
 Em 2022, um jovem participou do ENEM e a nota média das quatro provas era 750, permitindo acesso ao curso ENGENHARIA DE CONTROLE E AUTOMAÇÃO da UFRJ com nota de corte 749,45 na modalidade ampla concorrência.[^refsisu] Um outro candidato nesse mesmo ano tirou 720. Como devemos interpretar estes resultados? A principal pergunta
 
+XXX
+
 ```{hint}
 O ENEM é o Exame Nacional do Ensino Médio. Desde 2009 o ENEM é uma prova de seleção, com quatro partes objetivos com 45 questões e uma dissertação. 
 ```

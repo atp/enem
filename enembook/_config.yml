@@ -5,9 +5,9 @@
 
 #######################################################################################
 # Book settings
-title                       : My Jupyter Book  # The title of the book. Will be placed in the left navbar.
-author                      : The Jupyter Book community  # The author of the book
-copyright                   : "2023"  # Copyright year to be placed in the footer
+title                       : A questão ENEM  # The title of the book. Will be placed in the left navbar.
+author                      : O Grupo ATP  # The author of the book
+copyright                   : "2024"  # Copyright year to be placed in the footer
 logo                        : ""  # A path to the book logo
 # Patterns to skip when building the book. Can be glob-style (e.g. "*skip.ipynb")
 exclude_patterns            : [_build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints"]
@@ -72,16 +72,16 @@ latex:
 #######################################################################################
 # Launch button settings
 launch_buttons:
-  notebook_interface        : classic  # The interface interactive links will activate ["classic", "jupyterlab"]
+  notebook_interface        : jupyterlab  # The interface interactive links will activate ["classic", "jupyterlab"]
   binderhub_url             : ""  # The URL of the BinderHub (e.g., https://mybinder.org)
   jupyterhub_url            : ""  # The URL of the JupyterHub (e.g., https://datahub.berkeley.edu)
   thebe                     : false  # Add a thebe button to pages (requires the repository to run on Binder)
   colab_url                 : "" # The URL of Google Colab (https://colab.research.google.com)
 
 repository:
-  url                       : https://github.com/executablebooks/jupyter-book  # The URL to your book's repository
-  path_to_book              : ""  # A path to your book's folder, relative to the repository root.
-  branch                    : master  # Which branch of the repository should be used when creating links
+  url                       : https://github.com/atp/enem/  # The URL to your book's repository
+  path_to_book              : "enembook"  # A path to your book's folder, relative to the repository root.
+  branch                    : main  # Which branch of the repository should be used when creating links
 
 #######################################################################################
 # Advanced and power-user settings

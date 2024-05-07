@@ -7,7 +7,7 @@ parts:
       title: Teorica Clássica e TRI
     - file: TRI
   - caption: O ENEM 2009-2022
-    numbered: True
+    numbered: False
     chapters:
     - file: Desempenho
     - file: Características das questões
@@ -17,4 +17,8 @@ parts:
     chapters:
     - file: Incerteza-TRI
     - file: Contrafactuais
-    - file: Consequências 
+    - file: Consequências
+  - caption: Relatórios
+    chapters:
+    - file: Relatório 1 Grabiel.md
+    - file: Relatório Luis 2024-1.md

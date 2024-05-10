@@ -4,6 +4,7 @@ import rpy2
 import rpy2.robjects as robjects
 from rpy2.robjects import pandas2ri
 from rpy2.robjects.packages import importr
+import os
 
 mirt = importr('mirt')
 mirtcat = importr("mirtCAT")
@@ -23,13 +24,15 @@ summary = rpy2.robjects.r['summary']
 coef = rpy2.robjects.r['coef']
 rprint = rpy2.robjects.r['print']
 
+datadir = os.path.join(os.path.abspath(os.path.dirname(__file__)),'data')
+
 def load_sample(ano,n):
     '''Retorna dataframe com n linhas da prova ENEM do ano e area (MT,LC,CH,CN).
 
     Depende da amostra gerada no notebook 00-PrepareData
     '''
     perc = 1 # usar amostra de 1% por agora
-    fn = f'data/enem_{perc}_{ano}.csv'
+    fn = os.path.join(datadir,f'enem_{perc}_{ano}.csv')
     df = pd.read_csv(fn)
     return df.sample(n)
 
@@ -37,7 +40,7 @@ def load_acertos(ano,area,n,remove_abandonados=True,prova=None):
     assert ano in range(2009,2023)
     assert area in ['CN','CH','MT']
     perc = 1 #TODO: generalizar para quando temos outras porcentagens
-    fn = f'data/ac_{perc}_{ano}_{area}.csv'
+    fn = os.path.join(datadir,f'ac_{perc}_{ano}_{area}.csv')
     resp = pd.read_csv(fn,index_col='candidato')
     if prova:
         assert prova in resp['caderno'].unique()
@@ -53,8 +56,9 @@ def item_info_inep(ano=None,area=None,cor=None,prova=None,item=None,list_criteri
     Se prova ou item são dados, retorna os itens correspondentes.
     Se ano, area ou cor são dados, filtra com "E" lógico.
     '''
-   
-    itens = pd.read_csv('data/itens_inep.csv',dtype={'CO_ITEM':str})
+
+    fn = os.path.join(datadir,'itens_inep.csv')
+    itens = pd.read_csv(fn,dtype={'CO_ITEM':str})
     
     if list_criteria:
         anos = itens['ano'].unique()
@@ -168,7 +172,7 @@ def load_padr(prova,n=1,nota_inep=False):
     perc = 1 #TODO: generalizar para quando temos outras porcentagens
     ano = item_info_inep(prova=prova)['ano'].iloc[0]
     area = item_info_inep(prova=prova)['SG_AREA'].iloc[0]
-    fn = f'data/ac_{perc}_{ano}_{area}.csv'
+    fn = os.path.join(datadir,f'ac_{perc}_{ano}_{area}.csv')
     resp = pd.read_csv(fn,index_col='candidato')
     assert prova in resp['caderno'].unique()
     resp = resp.query('caderno == @prova')
@@ -186,7 +190,23 @@ def load_padr(prova,n=1,nota_inep=False):
         
     return resp1
 
-def score_inep(padr,prova = None,params = None, method="EAP"):
+def scalecalparams(area = None, prova=None):
+    assert area or prova
+    fn = os.path.join(datadir,f'scorecal.csv')
+    df = pd.read_csv(fn)
+    df = df.set_index('prova')
+    df = df[df['stderr'] < 0.01]
+    if prova:
+        return df.loc[prova]['slope'],df.loc[prova]['intercept']
+    elif area:
+        df = df.query("area == @area")
+        return df['slope'].mean(),df['intercept'].mean()
+    
+def enem_scale(notas,area = None, prova=None):
+    slope,intercept = scalecalparams(area,prova)
+    return notas*slope + intercept
+
+def score_inep(padr,prova = None,params = None, method="EAP",enemscale=False):
     if prova is None:
         assert params is not None
     if params is None:
@@ -194,7 +214,14 @@ def score_inep(padr,prova = None,params = None, method="EAP"):
     # transformar os parâmetros de discriminação /  dificuldade de IRT para "slope / intercept" do mirt.
     params = mirt.traditional2mirt(to_rdf(params),"3PL")
     mod_inep = mirtcat.generate_mirt_object(to_rdf(params),itemtype = '3PL')
+    # padr pode conter colunas acertos, prova e nota_inep. Vamos tirar 
     score = mirt.fscores(mod_inep,method=method,full_scores=True,returnER=False,verbose=True ,response_pattern = to_rdf(padr))
     nota = to_df(score)[:,0]
     se = to_df(score)[:,1]
+    if enemscale:
+        slope, intercept = scalecalparams(prova=prova)
+        nota = slope*nota + intercept
+        se = slope*se
     return pd.DataFrame({'nota':nota, 'se':se},index=padr.index)
+
+

@@ -25,6 +25,7 @@ coef = rpy2.robjects.r['coef']
 rprint = rpy2.robjects.r['print']
 
 datadir = os.path.join(os.path.abspath(os.path.dirname(__file__)),'data')
+sisudir = os.path.join(os.path.abspath(os.path.dirname(__file__)),'sisu')
 
 def load_sample(ano,n):
     '''Retorna dataframe com n linhas da prova ENEM do ano e area (MT,LC,CH,CN).
@@ -224,4 +225,24 @@ def score_inep(padr,prova = None,params = None, method="EAP",enemscale=False):
         se = slope*se
     return pd.DataFrame({'nota':nota, 'se':se},index=padr.index)
 
+def notas_sisu(ano,edicao):
+    
+    arquivo = f"{sisudir}/orig/{ano}_{edicao}_sisu.csv"
+    df = pd.read_csv(arquivo)
+    if ano >= 2019:
+        colunas = ['NO_IES','SG_IES','DS_CATEGORIA_ADM','SG_UF_CAMPUS','NO_CURSO','DS_TURNO','QT_VAGAS_CONCORRENCIA','QT_INSCRICAO','NU_NOTACORTE']
+        if ano >= 2024:
+            colunas = ['NO_IES','SG_IES','DS_CATEGORIA_ADM','SG_UF_CAMPUS','NO_CURSO','DS_TURNO','QT_VAGAS_OFERTADAS','QT_INSCRICAO','NU_NOTACORTE']
+        novocols = ['ies','sg_ies','catadm','uf','curso','turno','vagas','inscricoes','notacorte']
+        # TODO: generalizar para filtrar por cotas
+        df = df[df['DS_MOD_CONCORRENCIA'] == 'Ampla concorrência']
+        df = df[colunas]
+        df.columns = novocols
+    else:    
+        colunas = ['NOME IES','SIGLA IES','NOME CURSO','TURNO','NOTA DE CORTE']
+        novocols = ['ies','sg_ies','curso','turno','notacorte']
+        df = df[df['TIPO MODALIDADE'] == 'Ampla Concorrência']
+        df = df[colunas]
+        df.columns = novocols
+    return df
 

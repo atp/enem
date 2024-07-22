@@ -38,7 +38,7 @@ def load_sample(ano,n):
     return df.sample(n)
 
 def load_acertos(ano,area,n,remove_abandonados=True,prova=None):
-    assert ano in range(2009,2023)
+    assert ano in range(2009,2024)
     assert area in ['CN','CH','MT']
     perc = 1 #TODO: generalizar para quando temos outras porcentagens
     fn = os.path.join(datadir,f'ac_{perc}_{ano}_{area}.csv')

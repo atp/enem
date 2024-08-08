@@ -174,7 +174,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Testes padronizadas X</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Teoria%20de%20testes.html">Teorica Clássica e TRI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="TRI.html">Terio de resposta ao Item (TRI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRI.html">Como funciona TRI</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">O ENEM 2009-2022</span></p>
 <ul class="nav bd-sidenav">
@@ -340,8 +340,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resumo-do-projeto">Resumo do projeto</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#principais-resultados">Principais resultados</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacao-da-escala-enem">Interpretação da escala ENEM</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#incerteza-e-robustez-da-nota-enem">Incerteza e robustez da nota ENEM</a></li>
 </ul>
             </nav>
         </div>
@@ -355,22 +355,39 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="apresentacao">
 <h1>Apresentação<a class="headerlink" href="#apresentacao" title="Link to this heading">#</a></h1>
-<p>O ENEM é um exame de seleção para ensino superior no Brasil organizado pelo estado. O resultado obtido é capaz de mudar o rumo de uma vida. Em 2022, por exemplo, um jovem com média 750 no ENEM podia ter acesso ao curso ENGENHARIA DE CONTROLE E AUTOMAÇÃO da UFRJ com nota de corte 749,45 na modalidade ampla concorrência.[^refsisu] Por outro lado, um outro candidato com uma nota de 740 não teria acesso.</p>
-<p>Como devemos interpretar as notas do ENEM? Há mesmo razões legítimas de distinguir os dois jovens? Podemos, com certa confiança, dizer que um candidato é mais apto para cursar determinados cursos do que outros? O que <em>significa</em> a nota do ENEM, como deve ser <em>interpretada</em> pelo candidato, pela IES e pela sociedade?</p>
-<p>Neste trabalho, pretendemos mostrar que há uma diferença grande entre interpretações ingênuas das notas e aquelas legitimatadas por especialistas da área de avaliação educacional.</p>
-<div class="admonition hint">
-<p class="admonition-title">Hint</p>
+<p>O ENEM é um exame de seleção para ensino superior no Brasil organizado pelo estado. O resultado obtido é capaz de mudar o rumo de uma vida. Em 2022, por exemplo, um jovem com média 750 no ENEM podia ter acesso ao curso ENGENHARIA DE CONTROLE E AUTOMAÇÃO da UFRJ com nota de corte 749,45 na modalidade ampla concorrência.[^refsisu] Por outro lado, um outro candidato com uma nota de 740 não teria acesso a este mesmo curso.</p>
+<p>Como devemos interpretar as notas do ENEM? Há mesmo razões legítimas de distinguir os dois jovens? Podemos, com certa confiança, dizer que um candidato é mais apto para cursar determinados cursos do que outros? O que <em>significa</em> a nota do ENEM e como esta nota deve ser <em>interpretada</em> pelo candidato, pela IES e pela sociedade?</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
 <p>O ENEM é o Exame Nacional do Ensino Médio. Desde 2009 o ENEM é uma prova de seleção, com quatro partes objetivos com 45 questões e uma dissertação.</p>
 </div>
-<p>A principal contribuição nova deste trabalho é fazer uma análise de robustez ou de sensibilidade das notas do ENEM.</p>
-<p>[^refsisu] O SISU é o sistema e processo organizado pelo MEC que organiza as inscrições e distribuição das vagas para cursos de ensino superior no Brasil. Veja <a class="reference external" href="https://sisu.mec.gov.br/#/relatorio#onepage">aqui</a> para a relação das notas de corte e distribuição de vagas.</p>
-<section id="resumo-do-projeto">
-<h2>Resumo do projeto<a class="headerlink" href="#resumo-do-projeto" title="Link to this heading">#</a></h2>
-<p>XXX</p>
+<p>Um dos objetivos principais deste trabalho é fazer uma análise de “robustez” das notas do ENEM. Queremos estudar, principalmente, a confiabilidade das notas geradas pelo INEP e analisar como o reconhecimento do fato que há incertezas nesta nota afeta a interpretação do resultado do ENEM. Pretendemos mostrar que há uma diferença grande entre interpretações ingênuas das notas e aquelas legitimatadas por especialistas da área de avaliação educacional. Há duas dificuldades principais de interpretação e uso das notas do ENEM, aquelas que se referem à <em>escala</em> e aquelas que decorrem da negligência das incertezas na nota.</p>
+<section id="interpretacao-da-escala-enem">
+<h2>Interpretação da escala ENEM<a class="headerlink" href="#interpretacao-da-escala-enem" title="Link to this heading">#</a></h2>
+<p>Somente uma nota alta ou baixa na prova de mátemática, ou ciência da natureza, não permite inferir conclusões sobre o desempenho futuro do candidato sem outras premissas. A validade da prova para determinadas finalidades (sucesso acadêmico, desempenho em outras provas) precisa ser estudado e argumenado. É natural achar que uma nota alta numa prova chamada de “Língua Portuguesa” quer dizer que o candidato é “proficiente” em língua portuguesa. Mas na realidade o que é proficiente e o que significa que uma pessoa é mais proficiente do que um outro, são conceitos bem mais complexos do que pode ser avaliada com um conjunto limitado de tarefas (45 questões de múltipla escolha no caso do ENEM).</p>
+<p>O ENEM gera um número, mas não é óbvio como interpretar este número. Por exemplo, certamente não é correto interpretar as notas das quatro provas objetivas como localizado numa escala de 0 até 1000. Tampouco é correto fazer uma analogia com as escalas de 0-10 com que se acostumamos na vida escolar. A escala ENEM foi construído de modo que em 2009, para uma certa parte de alunos, a média da escola era 500, com desvio padrão 100. O INEP busca manter a comparabilidade entre anos da desta escala ENEM. Assim, uma afirmação mais razoável é que notas abaixo de 700 (dois desvios padrão acima da média) são normalmente obtidas por 97,7% dos candidatos.</p>
+<p>Um equívoco relacionado é achar que a nota é relacionada com algum tipo de fração, por exemplo 70% de acertos ou (ainda menos defensável) algo como x% de alguma “quantidade de aprendizagem”. A escala ENEM e escalas parecidos usados em avaliações educacionais não tem “zero” ou valor mínimo ou máximo e as notas geradas nestas escalas não devem ser usados em contas do tipo “esta nota vale x vezes mais que esta”.</p>
+<p>A metodologia para construir a escala ENEM, a teoria de resposta ao item (TRI), transforma padrões de acertos em notas mas de uma maneira mais complexa do que simplesmente somar o número de acertos. A TRI leva em conta as diferentes características de cada item (questão de múltipla escolha no caso do ENEM). Mas também não é totalmente correto pensar que um item mais difícil sempre “pesa mais” na nota final. É um pouco contraintuitivo, mas é uma outra característica de um item, a chamada “discriminação” influencia mais na nota final. A rigor, não é possível conceber a nota gerada pela TRI como sendo composto de uma média ponderada de contribuições independentes de acertos de itens individuais. A TRI leva em conta o padrão de respostas inteiro para estimar a proficiência (nota).</p>
+<p>O que é então a interpretação correta da nota na escala ENEM? Como enfatizada acima, a questão da validade, para determinadadas finalidades, é a mais importante de todas. Se admitimos que o conteúdo da prova é pelo menos aproximadamente válido para nossas finalidades, podemos se valer da psicometria e afirmar que a escala ENEM é uma escala do tipo “intervalo”. Isto quer dizer que, se levarmos em conta as incertezas de medição (veja abaixo), é razoável ordenar candidatos baseado na sua nota e até podemos afirmar que uma diferença de proficiência entre candidatos com, digamos, 500 e 550, representa a mesma diferença do que entre candidatos com 600 e 650. Por outro lado, como já dissemos, <strong>não</strong> é correto interpretar 600 como sendo “20% a mais” do que 500.</p>
 </section>
-<section id="principais-resultados">
-<h2>Principais resultados<a class="headerlink" href="#principais-resultados" title="Link to this heading">#</a></h2>
-<p>YYY</p>
+<section id="incerteza-e-robustez-da-nota-enem">
+<h2>Incerteza e robustez da nota ENEM<a class="headerlink" href="#incerteza-e-robustez-da-nota-enem" title="Link to this heading">#</a></h2>
+<p>É natural associar ao fato que a prova gera um número, ainda relatado com vários algarismos (“a sua nota é 749,5”), uma impressão de precisão e confiabilidade. Esta impressão é enganosa. Mostramos com este projeto que se admitimos que as provas do ENEM “medem” algo num certo sentido, elas medem proficiência com muito menos precisão e confiabilidade do que normalmente é assumido pelas instituições e o público em geral. A <em>confiabilidade</em> da nota é limitada, fundamentalmente, porque a prova não é infinitamente longa. A ideia de um intervalo de confiança é familiar de pesquisas de opinião ou de intenção de voto. Nestas pesquisas, uma amostra é usado para fazer inferências sobre a população em geral. O número relativamente pequena de participantes (mil, ou duas mil) é o que leva a uma contribuição à incerteza no resultado. De forma análoga, é possivel estimar a inevitável incerteza (estatística ou amostral) na nota de um candidato causado pelo número finito (45) de questões em provas do ENEM.</p>
+<p>Para ter uma ideia da ordem de grandeza deste tipo de incertezas nas notas do ENEM, mostramos na figura abaixo um dos resultados deste projeto. Conseguimos reproduzir (exatamente) as notas que o INEP divulgou, a partir dos padrões de resposta dos candidatos e usando os parâmetros dos itens publicados. O algorítmo TRI que usamos, além da própra nota, fornece uma estimativa do erro padrão e assim um intervalo de confiança.</p>
+<p><img alt="ss" src="_images/rel2-rep-da-nota-erro.png" /></p>
+<div class="admonition-um-exemplo-concreto admonition">
+<p class="admonition-title">Um exemplo concreto</p>
+<p>Um candidato com uma nota próximo a 600. O chamado “erro padrão” desta nota é por volta de 30 pontos, o que leva a um intervalo de confiança de 95% de 540 até 660.</p>
+</div>
+<p><a class="reference external" href="https://voila.atp.usp.br/voila/render/enem/Incerteza%20na%20nota%20ENEM.ipynb">Veja aqui para um notebook</a> onde é possível escolher um dos candidatos que fizeram a prova no passado e analisar qual seria a nota e seu o intervalo de confiança.</p>
+<p>Além da incerteza estatística, há outras razões que a nota ENEM não deve ser tratado como avaliação absoluta e final da abilidade do candidato. Neste projeto investigamos o efeito sobre a nota de algumas decisões do INEP que em princípio podem ser considerados arbritárias, mas que afetam diferentes candidatos de forma diferente:</p>
+<ul class="simple">
+<li><p>Algumas questões são eliminados para fins do cálculo da nota pelo INEP. Isto acontece regularmente e por vários motivos. Apesar de, supostamente, serem testadas antes de fazer parte de uma das provas do ENEM, algumas questões apresentem características estastísticas que dificultam ou impossibilitam calcular a nota via TRI. Um exemplo seria uma questão que foi acertada por pessoas com desempenho fraco no resto da prova, mas errada por candidatos com desempenho bom.</p></li>
+<li><p>Uma pessoa pode ter acertado ou errada um item simplesmente por desatenção, não relacionado com seu real abilidade na área avaliada.</p></li>
+<li><p>O INEP usa uma determinada metodologia (“EAP”) para determinar a nota pelo TRI, mas outras metodologias poderiam ser usado.</p></li>
+</ul>
+<p>Neste projeto investigamos também a <em>robustez</em> da nota ENEM, no sentido de investigar como pequenas decisões com as acima afetam a nota do ENEM.</p>
+<p>[^refsisu] O SISU é o sistema e processo organizado pelo MEC que organiza as inscrições e distribuição das vagas para cursos de ensino superior no Brasil. Veja <a class="reference external" href="https://sisu.mec.gov.br/#/relatorio#onepage">aqui</a> para a relação das notas de corte e distribuição de vagas.</p>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -437,8 +454,8 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resumo-do-projeto">Resumo do projeto</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#principais-resultados">Principais resultados</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacao-da-escala-enem">Interpretação da escala ENEM</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#incerteza-e-robustez-da-nota-enem">Incerteza e robustez da nota ENEM</a></li>
 </ul>
   </nav></div>
 

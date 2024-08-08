@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Terio de resposta ao Item (TRI) &#8212; A questão ENEM</title>
+    <title>Como funciona TRI &#8212; A questão ENEM</title>
   
   
   
@@ -173,7 +173,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Testes padronizadas X</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Teoria%20de%20testes.html">Teorica Clássica e TRI</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Terio de resposta ao Item (TRI)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Como funciona TRI</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">O ENEM 2009-2022</span></p>
 <ul class="nav bd-sidenav">
@@ -245,7 +245,7 @@
       
       
       
-      <li><a href="_sources/TRI.md" target="_blank"
+      <li><a href="_sources/TRI.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -255,7 +255,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -316,7 +316,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -327,11 +329,19 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Terio de resposta ao Item (TRI)</h1>
+    <h1>Como funciona TRI</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-nota-tri-e-bem-diferente-do-que-o-numero-de-acertos">A nota TRI é bem diferente do que o número de acertos</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -341,8 +351,424 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="terio-de-resposta-ao-item-tri">
-<h1>Terio de resposta ao Item (TRI)<a class="headerlink" href="#terio-de-resposta-ao-item-tri" title="Link to this heading">#</a></h1>
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/home/ewout/enem_atp/&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">util</span> <span class="kn">import</span> <span class="n">load_sample</span><span class="p">,</span> <span class="n">load_acertos</span><span class="p">,</span><span class="n">provas</span><span class="p">,</span><span class="n">score_inep</span><span class="p">,</span><span class="n">load_padr</span><span class="p">,</span><span class="n">item_info_inep</span><span class="p">,</span> <span class="n">params_inep</span><span class="p">,</span> <span class="n">scalecalparams</span>
+<span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="como-funciona-tri">
+<h1>Como funciona TRI<a class="headerlink" href="#como-funciona-tri" title="Link to this heading">#</a></h1>
+<p>A teoria de resposta ao item é uma metodologia para calcular notas a partir de padrões de respostas a “itens” (questões). Vamos começar com um exemplo, carregando uma amostra de alguns dos milhões de candidatos que fizeram a prova de 2023.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">load_sample</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NU_INSCRICAO</th>
+      <th>NU_ANO</th>
+      <th>TP_FAIXA_ETARIA</th>
+      <th>TP_SEXO</th>
+      <th>TP_ESTADO_CIVIL</th>
+      <th>TP_COR_RACA</th>
+      <th>TP_NACIONALIDADE</th>
+      <th>TP_ST_CONCLUSAO</th>
+      <th>TP_ANO_CONCLUIU</th>
+      <th>TP_ESCOLA</th>
+      <th>...</th>
+      <th>Q016</th>
+      <th>Q017</th>
+      <th>Q018</th>
+      <th>Q019</th>
+      <th>Q020</th>
+      <th>Q021</th>
+      <th>Q022</th>
+      <th>Q023</th>
+      <th>Q024</th>
+      <th>Q025</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>19639</th>
+      <td>210061860370</td>
+      <td>2023</td>
+      <td>9</td>
+      <td>M</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>7</td>
+      <td>1</td>
+      <td>...</td>
+      <td>A</td>
+      <td>A</td>
+      <td>A</td>
+      <td>B</td>
+      <td>A</td>
+      <td>A</td>
+      <td>C</td>
+      <td>A</td>
+      <td>B</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>1280</th>
+      <td>210060462317</td>
+      <td>2023</td>
+      <td>2</td>
+      <td>M</td>
+      <td>0</td>
+      <td>3</td>
+      <td>1</td>
+      <td>2</td>
+      <td>0</td>
+      <td>2</td>
+      <td>...</td>
+      <td>A</td>
+      <td>A</td>
+      <td>A</td>
+      <td>B</td>
+      <td>A</td>
+      <td>A</td>
+      <td>B</td>
+      <td>A</td>
+      <td>A</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>2736</th>
+      <td>210058518727</td>
+      <td>2023</td>
+      <td>12</td>
+      <td>F</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>14</td>
+      <td>1</td>
+      <td>...</td>
+      <td>B</td>
+      <td>A</td>
+      <td>A</td>
+      <td>B</td>
+      <td>A</td>
+      <td>B</td>
+      <td>E</td>
+      <td>B</td>
+      <td>D</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>19354</th>
+      <td>210061998570</td>
+      <td>2023</td>
+      <td>3</td>
+      <td>M</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+      <td>2</td>
+      <td>0</td>
+      <td>3</td>
+      <td>...</td>
+      <td>B</td>
+      <td>A</td>
+      <td>A</td>
+      <td>B</td>
+      <td>A</td>
+      <td>A</td>
+      <td>D</td>
+      <td>A</td>
+      <td>B</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>16105</th>
+      <td>210058557043</td>
+      <td>2023</td>
+      <td>2</td>
+      <td>F</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>0</td>
+      <td>3</td>
+      <td>...</td>
+      <td>B</td>
+      <td>A</td>
+      <td>B</td>
+      <td>B</td>
+      <td>A</td>
+      <td>A</td>
+      <td>C</td>
+      <td>A</td>
+      <td>C</td>
+      <td>B</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 76 columns</p>
+</div></div></div>
+</div>
+<p>Vemos que para cada candidato há informaçoes contextuais (autoreportado, na hora de fazer a inscrição do ENEM) sobre idade, sexo, cor/raça e outros variáveis. Nesta base também constam os padrões de resposta e a nota ENEM determinado pelo INEP. Transformamos estes dados numa outra tabela para facilitar as análises que vamos fazer:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">load_acertos</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span><span class="s1">&#39;CN&#39;</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>40724</th>
+      <th>60332</th>
+      <th>126604</th>
+      <th>117631</th>
+      <th>43890</th>
+      <th>85436</th>
+      <th>26042</th>
+      <th>83558</th>
+      <th>64023</th>
+      <th>87989</th>
+      <th>...</th>
+      <th>111665</th>
+      <th>84422</th>
+      <th>83378</th>
+      <th>117887</th>
+      <th>66330</th>
+      <th>48492</th>
+      <th>63155</th>
+      <th>acertos</th>
+      <th>caderno</th>
+      <th>nota_inep</th>
+    </tr>
+    <tr>
+      <th>candidato</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>210059908810</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>15</td>
+      <td>1223</td>
+      <td>570.9</td>
+    </tr>
+    <tr>
+      <th>210059767159</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>14</td>
+      <td>1221</td>
+      <td>470.7</td>
+    </tr>
+    <tr>
+      <th>210059469421</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7</td>
+      <td>1221</td>
+      <td>443.8</td>
+    </tr>
+    <tr>
+      <th>210061123360</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>9</td>
+      <td>1221</td>
+      <td>416.0</td>
+    </tr>
+    <tr>
+      <th>210061773071</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7</td>
+      <td>1224</td>
+      <td>486.8</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 48 columns</p>
+</div></div></div>
+</div>
+<section id="a-nota-tri-e-bem-diferente-do-que-o-numero-de-acertos">
+<h2>A nota TRI é bem diferente do que o número de acertos<a class="headerlink" href="#a-nota-tri-e-bem-diferente-do-que-o-numero-de-acertos" title="Link to this heading">#</a></h2>
+<p>Primeiro, mostramos o que todo mundo que já fez o ENEM sabe: dois candidatos com o mesmo número de acertos podem ter notas ENEM bem diferentes. Não é somente o número de acertos que conta, é também o padrão de respostas que é levado em conta:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">load_acertos</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span><span class="s1">&#39;CN&#39;</span><span class="p">,</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;acertos&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;nota_inep&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;acertos&#39;, ylabel=&#39;nota_inep&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/0019719207973302c2dca88d0d0d5dc00d279e9a2f0f3799d6a87e3da5a6471d.png" src="_images/0019719207973302c2dca88d0d0d5dc00d279e9a2f0f3799d6a87e3da5a6471d.png" />
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -400,7 +826,20 @@ document.write(`
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"></div>
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-nota-tri-e-bem-diferente-do-que-o-numero-de-acertos">A nota TRI é bem diferente do que o número de acertos</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

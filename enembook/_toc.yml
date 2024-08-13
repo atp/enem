@@ -5,7 +5,7 @@ parts:
     chapters:
     - file: Teoria de testes
       title: Teorica Clássica e TRI
-    - file: TRI
+    - file: TRI.ipynb
   - caption: O ENEM 2009-2022
     numbered: False
     chapters:

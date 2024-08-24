@@ -216,9 +216,10 @@ def score_inep(padr,prova = None,params = None, method="EAP",enemscale=False):
     params = mirt.traditional2mirt(to_rdf(params),"3PL")
     mod_inep = mirtcat.generate_mirt_object(to_rdf(params),itemtype = '3PL')
     # padr pode conter colunas acertos, prova e nota_inep. Vamos tirar 
-    score = mirt.fscores(mod_inep,method=method,full_scores=True,returnER=False,verbose=True ,response_pattern = to_rdf(padr))
+    score = mirt.fscores(mod_inep,method=method,full_scores=False,verbose=True,response_pattern = to_rdf(padr))
     nota = to_df(score)[:,0]
     se = to_df(score)[:,1]
+    
     if enemscale:
         slope, intercept = scalecalparams(prova=prova)
         nota = slope*nota + intercept

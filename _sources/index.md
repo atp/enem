@@ -45,6 +45,6 @@ Além da incerteza estatística, há outras razões que a nota ENEM não deve se
 Neste projeto investigamos também a *robustez* da nota ENEM, no sentido de investigar como pequenas decisões com as acima afetam a nota do ENEM.
 
 
-[^refsisu] O SISU é o sistema e processo organizado pelo MEC que organiza as inscrições e distribuição das vagas para cursos de ensino superior no Brasil. Veja [aqui](https://sisu.mec.gov.br/#/relatorio#onepage) para a relação das notas de corte e distribuição de vagas.
+[^refsisu]: O SISU é o sistema e processo organizado pelo MEC que organiza as inscrições e distribuição das vagas para cursos de ensino superior no Brasil. Veja [aqui](https://sisu.mec.gov.br/#/relatorio#onepage) para a relação das notas de corte e distribuição de vagas.
 
 

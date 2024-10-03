@@ -1,3 +1,4 @@
+
 # funções de utilidade 
 import pandas as pd
 import rpy2
@@ -133,7 +134,7 @@ def rename_aban(itemname):
     return itemname.strip('-aban')
 
 
-def item_stats(ano,area,cor='AMARELA'):
+def item_stats(ano,area,cor='AMARELA',cached=False):
     acertos  = load_acertos(ano, area, n=10000,remove_abandonados=False)
     resp = acertos.iloc[:,:-3]
     resp.rename(columns=rename_aban,inplace=True)
@@ -168,7 +169,7 @@ def params_inep(prova):
     params['u'] = 1
     return params.dropna().sort_index()
 
-def load_padr(prova,n=1,nota_inep=False):
+def load_padr(prova,n=1,nota_inep=False, percentil = None):
     'Carrega um padrão de resposta aleatório. Retorna padrões de resposta'
     perc = 1 #TODO: generalizar para quando temos outras porcentagens
     ano = item_info_inep(prova=prova)['ano'].iloc[0]
@@ -177,45 +178,58 @@ def load_padr(prova,n=1,nota_inep=False):
     resp = pd.read_csv(fn,index_col='candidato')
     assert prova in resp['caderno'].unique()
     resp = resp.query('caderno == @prova')
+    if percentil:
+        resp = resp[pd.qcut(resp['nota_inep'],100,labels=range(1,101)) == percentil]
     resp = resp.sample(n)
     removed_columns = [col for col in resp.columns if col.endswith('-aban')]
     # em 2011 o inep não deu os parámetros do item 73678 (mas não indicou que era abandonado)
     resp = resp.drop(columns=removed_columns)
     resp1 = resp.iloc[:,:-3]
-    if nota_inep:
-        notas = resp.iloc[:,-3:]
     resp1.columns = resp1.columns.astype(int)
     resp1 = resp1.sort_index(axis=1) # se não fizer isso, os itens (colunas nestas padrões de resposta) não correspondem ao modelo mod_inep acima
     if nota_inep:
+        notas = resp.iloc[:,-3:]
         return resp1,notas
         
     return resp1
 
 def scalecalparams(area = None, prova=None):
-    assert area or prova
+    assert area or prova, "Must give either area or prova"
     fn = os.path.join(datadir,f'scorecal.csv')
     df = pd.read_csv(fn)
     df = df.set_index('prova')
-    df = df[df['stderr'] < 0.01]
     if prova:
-        return df.loc[prova]['slope'],df.loc[prova]['intercept']
+        assert df.loc[prova]['stderr'] < 0.05, "We don't have scale calibration parameters for this exam. Use area."
+        slope,intercept = df.loc[prova]['slope'],df.loc[prova]['intercept']
+        return slope, intercept
     elif area:
+        df = df[df['stderr'] < 0.01]
         df = df.query("area == @area")
         return df['slope'].mean(),df['intercept'].mean()
     
-def enem_scale(notas,area = None, prova=None):
-    slope,intercept = scalecalparams(area,prova)
+def notas_to_enem_scale(notas,prova):
+    slope,intercept = scalecalparams(prova=prova)
     return notas*slope + intercept
 
+def irt_params_to_enem_scale(params,prova):
+    params = params.copy()
+    slope,intercept = scalecalparams(prova=prova)
+    params['b_inep'] = params['b_inep']*slope + intercept
+    params['a_inep'] = params['a_inep']*slope
+    return params
+    
 def score_inep(padr,prova = None,params = None, method="EAP",enemscale=False):
     if prova is None:
         assert params is not None
     if params is None:
         params = params_inep(prova)
+    assert len(params) == len(padr.columns), f"Length of params ({len(params)} is not equal to length of padr ({len(padr.columns)})"
     # transformar os parâmetros de discriminação /  dificuldade de IRT para "slope / intercept" do mirt.
     params = mirt.traditional2mirt(to_rdf(params),"3PL")
     mod_inep = mirtcat.generate_mirt_object(to_rdf(params),itemtype = '3PL')
-    # padr pode conter colunas acertos, prova e nota_inep. Vamos tirar 
+    # padr pode conter colunas acertos, prova e nota_inep. Vamos tirar.
+    if 'nota_inep' in padr.columns:
+        padr = padr.iloc[:,:-3]
     score = mirt.fscores(mod_inep,method=method,full_scores=False,verbose=True,response_pattern = to_rdf(padr))
     nota = to_df(score)[:,0]
     se = to_df(score)[:,1]

@@ -1,5 +1,5 @@
-
 # funções de utilidade 
+import numpy as np
 import pandas as pd
 import rpy2
 import rpy2.robjects as robjects
@@ -28,29 +28,38 @@ rprint = rpy2.robjects.r['print']
 datadir = os.path.join(os.path.abspath(os.path.dirname(__file__)),'data')
 sisudir = os.path.join(os.path.abspath(os.path.dirname(__file__)),'sisu')
 
-def load_sample(ano,n):
-    '''Retorna dataframe com n linhas da prova ENEM do ano e area (MT,LC,CH,CN).
+def load_sample(ano,n=None,perc=1):
+    '''Retorna dataframe com n linhas da prova ENEM do ano.
 
     Depende da amostra gerada no notebook 00-PrepareData
     '''
-    perc = 1 # usar amostra de 1% por agora
     fn = os.path.join(datadir,f'enem_{perc}_{ano}.csv')
     df = pd.read_csv(fn)
-    return df.sample(n)
+    if n:
+        return df.sample(n)
+    else:
+        return df
 
-def load_acertos(ano,area,n,remove_abandonados=True,prova=None):
+def load_acertos(ano,area,n=None,remove_abandonados=True,prova=None,acertos=None,percentil=None):
     assert ano in range(2009,2024)
-    assert area in ['CN','CH','MT']
-    perc = 1 #TODO: generalizar para quando temos outras porcentagens
+    assert area in ['CN','CH','MT','LC','LC_en','LC_esp']
+    perc = 1 #TODO: generalizar para quando temos outras porcentagens        
     fn = os.path.join(datadir,f'ac_{perc}_{ano}_{area}.csv')
     resp = pd.read_csv(fn,index_col='candidato')
+    if acertos:
+        resp = resp.query("acertos == @acertos")
+    if percentil:
+        resp = resp[pd.qcut(resp['nota_inep'],100,labels=range(1,101)) == percentil]
     if prova:
         assert prova in resp['caderno'].unique()
         resp = resp.query('caderno == @prova')
     if remove_abandonados:
         removed_columns = [col for col in resp.columns if col.endswith('-aban')]
         resp = resp.drop(columns=removed_columns)
-    return resp.sample(n)
+    if n:
+        return resp.sample(n)
+    else:
+        return resp
 
 def item_info_inep(ano=None,area=None,cor=None,prova=None,item=None,list_criteria=False):
     '''Retorna as informações sobre itens do INEP, filtrando pelos critérios dados.
@@ -135,7 +144,7 @@ def rename_aban(itemname):
 
 
 def item_stats(ano,area,cor='AMARELA',cached=False):
-    acertos  = load_acertos(ano, area, n=10000,remove_abandonados=False)
+    acertos  = load_acertos(ano, area, n=None,remove_abandonados=False)
     resp = acertos.iloc[:,:-3]
     resp.rename(columns=rename_aban,inplace=True)
     istats = mirt.itemstats(to_rdf(resp))
@@ -154,22 +163,33 @@ def item_stats(ano,area,cor='AMARELA',cached=False):
     istats = istats.drop(columns=['total.r_if_rm','alpha_if_rm'])
     return istats
 
-def provas(ano,area):
+def provas(ano,area,pickone=False):
     'retorna as provas (cadernos) em nossas amostras de um determinado ano / area'
     
     amostra = load_acertos(ano,area,10000)
-    return amostra['caderno'].unique()
+    provas = amostra['caderno'].unique()
+    if pickone:
+        return np.random.choice(provas)
+    else:
+        return provas
 
-def params_inep(prova):
-    params = item_info_inep(prova=prova)
+def params_inep(ano=None,area=None,prova=None,dropna=True):
+    if prova:
+        params = item_info_inep(prova=prova)
+    else:
+        prova = provas(ano,area,True)
+        params = item_info_inep(prova=prova)
     params = params[["CO_ITEM","NU_PARAM_A","NU_PARAM_B","NU_PARAM_C"]]
-    params['CO_ITEM'] = params['CO_ITEM'].astype(int)
+    params['CO_ITEM'] = params['CO_ITEM']
     params = params.set_index("CO_ITEM")
     params.columns = ["a_inep","b_inep","c_inep"]
     params['u'] = 1
-    return params.dropna().sort_index()
+    if dropna:
+        return params.dropna()
+    else:
+        return params
 
-def load_padr(prova,n=1,nota_inep=False, percentil = None):
+def load_padr(prova,n=None,nota_inep=False, percentil = None):
     'Carrega um padrão de resposta aleatório. Retorna padrões de resposta'
     perc = 1 #TODO: generalizar para quando temos outras porcentagens
     ano = item_info_inep(prova=prova)['ano'].iloc[0]
@@ -180,7 +200,8 @@ def load_padr(prova,n=1,nota_inep=False, percentil = None):
     resp = resp.query('caderno == @prova')
     if percentil:
         resp = resp[pd.qcut(resp['nota_inep'],100,labels=range(1,101)) == percentil]
-    resp = resp.sample(n)
+    if n:
+        resp = resp.sample(n)
     removed_columns = [col for col in resp.columns if col.endswith('-aban')]
     # em 2011 o inep não deu os parámetros do item 73678 (mas não indicou que era abandonado)
     resp = resp.drop(columns=removed_columns)
@@ -193,49 +214,46 @@ def load_padr(prova,n=1,nota_inep=False, percentil = None):
         
     return resp1
 
-def scalecalparams(area = None, prova=None):
-    assert area or prova, "Must give either area or prova"
-    fn = os.path.join(datadir,f'scorecal.csv')
+def scalecalparams(area):        
+    fn = os.path.join(datadir,f'scorecal-python-100.csv')
     df = pd.read_csv(fn)
-    df = df.set_index('prova')
-    if prova:
-        assert df.loc[prova]['stderr'] < 0.05, "We don't have scale calibration parameters for this exam. Use area."
-        slope,intercept = df.loc[prova]['slope'],df.loc[prova]['intercept']
-        return slope, intercept
-    elif area:
-        df = df[df['stderr'] < 0.01]
-        df = df.query("area == @area")
-        return df['slope'].mean(),df['intercept'].mean()
+    df = df[df['stderr'] < 0.01]
+    df = df.query("area == @area")
+    return df['slope'].mean(),df['intercept'].mean()
     
-def notas_to_enem_scale(notas,prova):
-    slope,intercept = scalecalparams(prova=prova)
+def notas_to_enem_scale(notas,area):
+    slope,intercept = scalecalparams(area)
     return notas*slope + intercept
 
-def irt_params_to_enem_scale(params,prova):
+def irt_params_to_enem_scale(params,ano,area):
     params = params.copy()
-    slope,intercept = scalecalparams(prova=prova)
+    slope,intercept = scalecalparams(area)
     params['b_inep'] = params['b_inep']*slope + intercept
     params['a_inep'] = params['a_inep']*slope
     return params
     
-def score_inep(padr,prova = None,params = None, method="EAP",enemscale=False):
-    if prova is None:
-        assert params is not None
+def score_inep(padr,ano,area,params = None, method="EAP",enemscale=False):
     if params is None:
-        params = params_inep(prova)
-    assert len(params) == len(padr.columns), f"Length of params ({len(params)} is not equal to length of padr ({len(padr.columns)})"
-    # transformar os parâmetros de discriminação /  dificuldade de IRT para "slope / intercept" do mirt.
-    params = mirt.traditional2mirt(to_rdf(params),"3PL")
-    mod_inep = mirtcat.generate_mirt_object(to_rdf(params),itemtype = '3PL')
+        params = params_inep(ano,area,dropna=True)
+
     # padr pode conter colunas acertos, prova e nota_inep. Vamos tirar.
     if 'nota_inep' in padr.columns:
         padr = padr.iloc[:,:-3]
+    
+    assert len(params) == len(padr.columns), f"Length of params ({len(params)} is not equal to length of padr ({len(padr.columns)})"
+    # transformar os parâmetros de discriminação /  dificuldade de IRT para "slope / intercept" do mirt.
+
+    params = params.reindex(padr.columns)
+    
+    params = mirt.traditional2mirt(to_rdf(params),"3PL")
+    mod_inep = mirtcat.generate_mirt_object(to_rdf(params),itemtype = '3PL')
+    
     score = mirt.fscores(mod_inep,method=method,full_scores=False,verbose=True,response_pattern = to_rdf(padr))
     nota = to_df(score)[:,0]
     se = to_df(score)[:,1]
     
     if enemscale:
-        slope, intercept = scalecalparams(prova=prova)
+        slope, intercept = scalecalparams(area)
         nota = slope*nota + intercept
         se = slope*se
     return pd.DataFrame({'nota':nota, 'se':se},index=padr.index)

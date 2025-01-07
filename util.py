@@ -6,6 +6,7 @@ import rpy2.robjects as robjects
 from rpy2.robjects import pandas2ri
 from rpy2.robjects.packages import importr
 import os
+from scipy.optimize import root_scalar
 
 mirt = importr('mirt')
 mirtcat = importr("mirtCAT")
@@ -28,22 +29,24 @@ rprint = rpy2.robjects.r['print']
 datadir = os.path.join(os.path.abspath(os.path.dirname(__file__)),'data')
 sisudir = os.path.join(os.path.abspath(os.path.dirname(__file__)),'sisu')
 
-def load_sample(ano,n=None,perc=1):
+def load_sample(ano,n=None,perc=1,orig=False):
     '''Retorna dataframe com n linhas da prova ENEM do ano.
 
     Depende da amostra gerada no notebook 00-PrepareData
     '''
-    fn = os.path.join(datadir,f'enem_{perc}_{ano}.csv')
+    if orig:
+        fn = os.path.join(datadir,f'enem_{perc}_{ano}_orig.csv')
+    else:
+        fn = os.path.join(datadir,f'enem_{perc}_{ano}.csv')
     df = pd.read_csv(fn)
     if n:
         return df.sample(n)
     else:
         return df
 
-def load_acertos(ano,area,n=None,remove_abandonados=True,prova=None,acertos=None,percentil=None):
+def load_acertos(ano,area,n=None,perc=1,remove_abandonados=True,prova=None,acertos=None,percentil=None):
     assert ano in range(2009,2024)
     assert area in ['CN','CH','MT','LC','LC_en','LC_esp']
-    perc = 1 #TODO: generalizar para quando temos outras porcentagens        
     fn = os.path.join(datadir,f'ac_{perc}_{ano}_{area}.csv')
     resp = pd.read_csv(fn,index_col='candidato')
     if acertos:
@@ -143,8 +146,8 @@ def rename_aban(itemname):
     return itemname.strip('-aban')
 
 
-def item_stats(ano,area,cor='AMARELA',cached=False):
-    acertos  = load_acertos(ano, area, n=None,remove_abandonados=False)
+def item_stats(ano,area,perc=1):
+    acertos  = load_acertos(ano, area, n=None,perc=perc,remove_abandonados=False)
     resp = acertos.iloc[:,:-3]
     resp.rename(columns=rename_aban,inplace=True)
     istats = mirt.itemstats(to_rdf(resp))
@@ -152,15 +155,12 @@ def item_stats(ano,area,cor='AMARELA',cached=False):
     #istats.index = istats.index.astype(int)
     #istats.index = istats.index
     item_info = item_info_inep(ano,area)
-    if cor:
-        item_info = item_info.query("TX_COR == @cor")
-    else:
-        item_info = item_info.drop_duplicates(subset=['CO_ITEM'],keep='first')
+    item_info = item_info.drop_duplicates(subset=['CO_ITEM'],keep='first')
     item_info.insert(0,'url',item_info['CO_ITEM'].apply(item_url))
     item_info = item_info.set_index('CO_ITEM')
     #item_info.index = item_info.index.astype(str)
     istats = pd.merge(istats,item_info,how='left',left_index=True,right_index=True,validate='1:m')
-    istats = istats.drop(columns=['total.r_if_rm','alpha_if_rm'])
+    #istats = istats.drop(columns=['total.r_if_rm','alpha_if_rm'])
     return istats
 
 def provas(ano,area,pickone=False):
@@ -225,7 +225,7 @@ def notas_to_enem_scale(notas,area):
     slope,intercept = scalecalparams(area)
     return notas*slope + intercept
 
-def irt_params_to_enem_scale(params,ano,area):
+def irt_params_to_enem_scale(params,area):
     params = params.copy()
     slope,intercept = scalecalparams(area)
     params['b_inep'] = params['b_inep']*slope + intercept
@@ -239,6 +239,9 @@ def score_inep(padr,ano,area,params = None, method="EAP",enemscale=False):
     # padr pode conter colunas acertos, prova e nota_inep. Vamos tirar.
     if 'nota_inep' in padr.columns:
         padr = padr.iloc[:,:-3]
+
+    # ter certeza que as colunas em padr são strings
+    padr.columns = padr.columns.astype(str)
     
     assert len(params) == len(padr.columns), f"Length of params ({len(params)} is not equal to length of padr ({len(padr.columns)})"
     # transformar os parâmetros de discriminação /  dificuldade de IRT para "slope / intercept" do mirt.
@@ -279,3 +282,17 @@ def notas_sisu(ano,edicao):
         df.columns = novocols
     return df
 
+def PL3(theta,a=1,b=0,c=0):
+    '3PL model likelihood'
+    return c + (1-c)*1/(1+np.exp(a*(b-theta)))
+
+def find_theta(a,b,c,prob=0.65):
+    'Find the theta with RP (Response Probability) = prob, for the 3PL model with a,b and c'
+    def fun(x,a,b,c):
+        return PL3(x,a,b,c) - prob
+    
+    res = root_scalar(fun,x0=b,x1=b*1.2,bracket=[-abs(b)*4,abs(b)*4],args=(a,b,c))
+    if res.converged:
+        return res.root
+    else:
+        return np.NaN

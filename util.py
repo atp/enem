@@ -284,15 +284,179 @@ def notas_sisu(ano,edicao):
 
 def PL3(theta,a=1,b=0,c=0):
     '3PL model likelihood'
-    return c + (1-c)*1/(1+np.exp(a*(b-theta)))
+    try: 
+        p = c + (1-c)*1/(1+np.exp(a*(b-theta)))
+    except RuntimeWarning:
+        print('warnin')
+        print(a,b,c)
+        return "dsfsd"
+    return p
 
 def find_theta(a,b,c,prob=0.65):
     'Find the theta with RP (Response Probability) = prob, for the 3PL model with a,b and c'
     def fun(x,a,b,c):
         return PL3(x,a,b,c) - prob
     
-    res = root_scalar(fun,x0=b,x1=b*1.2,bracket=[-abs(b)*4,abs(b)*4],args=(a,b,c))
+    res = root_scalar(fun,x0=b,x1=None,bracket=[-100,100],args=(a,b,c))
     if res.converged:
         return res.root
     else:
         return np.NaN
+
+def iteminfo(theta,a,b,c):
+    'Curva de informação do item'
+    P = PL3(theta,a,b,c)
+    Q = 1 - PL3(theta,a,b,c)
+    I = a**2*Q*(P - c)**2/(P*(1-c))
+    return I
+
+def testinfo(theta,items):
+    'Curva de informação do teste'
+    items = items.dropna()
+    I = np.zeros(len(theta))
+    for item,params in items.iterrows():
+        a,b,c = params['a_inep'],params['b_inep'],params['c_inep']
+        I = I + iteminfo(theta,a,b,c)
+    return I
+
+def datamaps(ano=2019):
+    # Renda (Q006)
+    # Veja que o mapeamento é sensível para as bordas. Parece razoável usar "dado faltante" para a resposta "Nenhuma renda". 
+    # Mas mesmo assim, não é claro o que usar para "Até R\\$ 998,00" ou "Mais de R\\$ 19.960,00".
+    rendamap = {'A':np.NaN, #Nenhuma renda.
+                  'B': 998/2, #Até R$ 998,00.
+                  'C': (998+1492)/2,
+                  'D': (1497+1996)/2,
+                  'E': (1996+2495)/2,
+                  'F': (2495+2994)/2,
+                  'G': (2994+3992)/2,
+                  'H': (3992+4999)/2,
+                  'I': (4999+5988)/2,
+                  'J': (5988+6986)/2,
+                  'K': (6986+7984)/2,
+                  'L': (7984+8982)/2,
+                  'M': (8982+9980)/2,
+                  'N': (9980+11976)/2,
+                  'O': (11976+14970)/2,
+                  'P': (14970+19960)/2,
+                  'Q': 19960 # Mais de R$ 19.960,00.
+                }
+    
+    # 1 seria < 17 anos. Uma opção é codificar com missing data, assim que vamos também desconsiderar 
+    # candidatos com idade > 20 ou 25 anos
+    idademap = {
+        1: 16,
+        2: 17,
+        3: 18,
+        4: 19,
+        5: 20,
+        6: 21,
+        7: 22,
+        8: 23,
+        9: 24,
+        10: 25,
+        11: 28, #Entre 26 e 30 anos
+        12: 33, # Entre 31 e 35 anos
+        13: 38, # Entre 36 e 40 anos
+        14: 43, # Entre 41 e 45 anos
+        15: 48, # Entre 46 e 50 anos
+        16: 53, # Entre 51 e 55 anos
+        17: 58, # Entre 56 e 60 anos
+        18: 63, # Entre 61 e 65 anos
+        19: 68, # Entre 66 e 70 anos
+        20: 72 # Maior de 70 anos
+    }
+    
+    # Escolaridade
+    escmap = {
+        'A': 0,
+        'B': 2,
+        'C': 6,
+        'D': 9.5,
+        'E': 11,
+        'F': 15,
+        'G': 17,
+        'H': np.NaN
+    }
+    # Dependência Administrativa
+    depadmmap = {1: 'federal',
+                 2:	'estadual',
+                 3:	'municipal',
+                 4:	'privada'
+                }
+    # Concluiu o Ensino Médio (TP_ST_CONCLUSAO)
+    concmap = {1: 'concluido',2: 'em'}
+    # Sexo (TP_SEXO)
+    sexomap = {'M': 'homem','F': 'mulher'}
+    # Cor / Raça (TP_COR_RACA)
+    corracamap = {0	: 'nao declarado',
+                  1	: 'branca',
+                  2 : 'preta',
+                  3 : 'parda',
+                  4 : 'amarela',
+                  5	: 'indigena',
+                 }
+    return rendamap,idademap,escmap,depadmmap,concmap,sexomap,corracamap
+
+def process_data(df, orig=False,
+                 idademin = 17,idademax=20,
+                 filterredacaocomproblema = True,
+                 filtermissingdep = True,
+                 filtercorracanaodeclarada = True,
+                 missing_data_rel=False):
+
+    ano = df['NU_ANO']
+    rendamap,idademap,escmap,depadmmap,concmap,sexomap,corracamap = datamaps(ano)    
+    df = df.copy()
+    if filterredacaocomproblema:
+        df = df[df['TP_STATUS_REDACAO'] == 1] # 'Sem problema"
+        
+    df['avgnota4'] = (df['NU_NOTA_MT'] + df['NU_NOTA_LC'] + df['NU_NOTA_CH'] + df['NU_NOTA_CN'])/4
+    df['avgnota5'] = (df['NU_NOTA_MT'] + df['NU_NOTA_LC'] + df['NU_NOTA_CH'] + df['NU_NOTA_CN'] + df['NU_NOTA_REDACAO'])/5
+    df = df.rename(columns = {'SG_UF_PROVA':'UF',
+                              'Q005': 'nfam',
+                              'NU_NOTA_MT': 'mt',
+                              'NU_NOTA_LC': 'lc', 
+                              'NU_NOTA_CH': 'ch', 
+                              'NU_NOTA_CN': 'cn', 
+                              'NU_NOTA_REDACAO': 'redacao',
+                              'CO_MUNICIPIO_PROVA': 'municipio'
+                         })
+    df['UF'] = df['UF'].astype('category')
+   
+    df['renda'] = df['Q006'].map(rendamap)
+        
+    df['rendapc'] = df['renda']/df['nfam']
+    df['lnrendapc'] = np.log(df['rendapc'])
+    
+    df['idade'] = df['TP_FAIXA_ETARIA'].map(idademap)
+    df['somaescpaimae'] = df['Q001'].map(escmap) + df['Q002'].map(escmap)
+    df['depadm'] = df['TP_DEPENDENCIA_ADM_ESC'].map(depadmmap)
+    df['depadm'] = df['depadm'].fillna("desconhecido")
+    df['depadm'] = df['depadm'].astype('category').cat.reorder_categories(['municipal','federal','estadual','privada','desconhecido'])
+    df['stconc'] = df['TP_ST_CONCLUSAO'].map(concmap)
+    df['sexo'] = df['TP_SEXO'].map(sexomap)
+    df['sexo'] = df['sexo'].astype('category').cat.reorder_categories(['mulher','homem'])
+    df['corraca'] = df['TP_COR_RACA'].map(corracamap)
+    df['corraca'] = df['corraca'].astype('category').cat.reorder_categories(['indigena','branca','amarela','preta','parda','nao declarado'])
+    
+    returnvars = ['avgnota4','avgnota5','mt','cn','lc','ch','redacao','nfam','rendapc','lnrendapc','idade','somaescpaimae','depadm','corraca','sexo','UF','stconc','municipio']
+    df = df[returnvars]
+    if missing_data_rel:
+        print(f"Antes dos filtros aqui, temos {len(df)} linhas\n Nestes dados, veja os missing data para cada variável")
+        print(df.isna().sum()/len(df))
+
+    df = df.query("idade >= @idademin & idade <= @idademax")
+    if filtermissingdep:
+        df = df[df['depadm'] != 'desconhecido']
+        df['depadm'] = df['depadm'].astype(pd.CategoricalDtype(['municipal','federal','estadual','privada']))
+   
+    if filtercorracanaodeclarada:
+        df = df[df['corraca'] != 'nao declarado']
+        df['corraca'] = df['corraca'].astype(pd.CategoricalDtype(['indigena','branca','amarela','preta','parda']))
+    
+    if missing_data_rel:
+        print(f"Depois dos filtros idade, Dep. Adm = desconhecido e CorRaça = Não declarada, temos {len(df)} linhas.")
+        print(f"E nestas {len(df)} linhas, temos {len(df.dropna())} linhas sem NAs")
+        
+    return df

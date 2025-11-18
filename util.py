@@ -45,7 +45,7 @@ def load_sample(ano,n=None,perc=1,orig=False):
         return df
 
 def load_acertos(ano,area,n=None,perc=1,remove_abandonados=True,prova=None,acertos=None,percentil=None):
-    assert ano in range(2009,2024)
+    assert ano in range(2009,2025)
     assert area in ['CN','CH','MT','LC','LC_en','LC_esp']
     fn = os.path.join(datadir,f'ac_{perc}_{ano}_{area}.csv')
     resp = pd.read_csv(fn,index_col='candidato')
@@ -243,7 +243,11 @@ def score_inep(padr,ano,area,params = None, method="EAP",enemscale=False):
     # ter certeza que as colunas em padr são strings
     padr.columns = padr.columns.astype(str)
     
-    assert len(params) == len(padr.columns), f"Length of params ({len(params)} is not equal to length of padr ({len(padr.columns)})"
+    if area != 'LC':
+        assert len(params) == len(padr.columns), f"Length of params ({len(params)} is not equal to length of padr ({len(padr.columns)})"
+    else:
+        assert len(params) == len(padr.columns) + 5, f"LC: length of params ({len(params)} is not equal to length of padr ({len(padr.columns)}) + 5"
+        
     # transformar os parâmetros de discriminação /  dificuldade de IRT para "slope / intercept" do mirt.
 
     params = params.reindex(padr.columns)

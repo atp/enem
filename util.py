@@ -180,7 +180,6 @@ def params_inep(ano=None,area=None,prova=None,dropna=True):
         prova = provas(ano,area,True)
         params = item_info_inep(prova=prova)
     params = params[["CO_ITEM","NU_PARAM_A","NU_PARAM_B","NU_PARAM_C"]]
-    params['CO_ITEM'] = params['CO_ITEM']
     params = params.set_index("CO_ITEM")
     params.columns = ["a_inep","b_inep","c_inep"]
     params['u'] = 1
@@ -311,7 +310,7 @@ def iteminfo(theta,a,b,c):
     'Curva de informação do item'
     P = PL3(theta,a,b,c)
     Q = 1 - PL3(theta,a,b,c)
-    I = a**2*Q*(P - c)**2/(P*(1-c))
+    I = a**2*Q*(P - c)**2/(P*(1-c)**2)
     return I
 
 def testinfo(theta,items):
